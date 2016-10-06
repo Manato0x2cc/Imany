@@ -1,4 +1,7 @@
 <?php
+/***
+  Check for rgba to red, green and blue
+  **/
 
 $r = 70;
 $g = 178;
