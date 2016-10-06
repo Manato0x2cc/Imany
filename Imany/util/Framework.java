@@ -10,6 +10,11 @@ public class Framework extends JPanel
 		setBackground(new Color(70,178,109));
 	}
 
+	public Framework(Color c)
+	{
+		setBackground(c);
+	}
+
 	public void setColor(Color c)
 	{
 		setBackground(c);

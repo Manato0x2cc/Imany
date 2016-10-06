@@ -26,7 +26,6 @@ public class ImagePanel extends JPanel
 		super.paintComponent(g);
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 	}
-
 	public void setImage(URL url)
 	{
 		try{
@@ -36,26 +35,22 @@ public class ImagePanel extends JPanel
 			int im_w = im.getWidth();
 			if(im_h >= im_w && im_h > HEIGHT)
 			{
-				setSize(im_w = equalRate(im_w, im_h, HEIGHT), HEIGHT);
-				im_h = HEIGHT;
+				setSize(equalRate(im_w, im_h, HEIGHT), HEIGHT);
 			}else if(im_w >= im_h && im_w > WIDTH)
 			{
-				setSize(WIDTH, im_h = equalRate(im_h, im_w, WIDTH));
-				im_w = WIDTH;
+				setSize(WIDTH, equalRate(im_h, im_w, WIDTH));
 			}else if(max(im_w, im_h) <= MIN)
 			{
 				if(im_h >= im_w){
-					setSize(im_w = equalRate(im_w, im_h, MIN), MIN);
-					im_h = MIN;
+					setSize(equalRate_MIN(im_w, im_h, MIN), MIN);
 				}else{
-					setSize(MIN, im_h = equalRate(im_h, im_w, MIN));
-					im_w = MIN;
+					setSize(MIN, equalRate_MIN(im_h, im_w, MIN));
 				}
 			}else setSize(im_w, im_h);
 			
-			ImageIcon icn = new ImageIcon(url);
+			ImageIcon icn = new ImageIcon(im);
 			image = icn.getImage();
-			locateTo(im_w, im_h);
+			locateTo(getWidth(), getHeight());
 			repaint();
 		}catch(Exception e){
 			lgr.warn(e.getMessage());
@@ -70,26 +65,22 @@ public class ImagePanel extends JPanel
 			int im_w = im.getWidth();
 			if(im_h >= im_w && im_h > HEIGHT)
 			{
-				setSize(im_w = equalRate(im_w, im_h, HEIGHT), HEIGHT);
-				im_h = HEIGHT;
+				setSize(equalRate(im_w, im_h, HEIGHT), HEIGHT);
 			}else if(im_w >= im_h && im_w > WIDTH)
 			{
-				setSize(WIDTH, im_h = equalRate(im_h, im_w, WIDTH));
-				im_w = WIDTH;
+				setSize(WIDTH, equalRate(im_h, im_w, WIDTH));
 			}else if(max(im_w, im_h) <= MIN)
 			{
 				if(im_h >= im_w){
-					setSize(im_w = equalRate(im_w, im_h, MIN), MIN);
-					im_h = MIN;
+					setSize(equalRate_MIN(im_w, im_h, MIN), MIN);
 				}else{
-					setSize(MIN, im_h = equalRate(im_h, im_w, MIN));
-					im_w = MIN;
+					setSize(MIN, equalRate_MIN(im_h, im_w, MIN));
 				}
 			}else setSize(im_w, im_h);
 			
 			ImageIcon icn = new ImageIcon(im);
 			image = icn.getImage();
-			locateTo(im_w, im_h);
+			locateTo(getWidth(), getHeight());
 			repaint();
 		}catch(Exception e){
 			lgr.warn(e.getMessage());
@@ -106,10 +97,16 @@ public class ImagePanel extends JPanel
 		return returnImg;
 	}
 
+	public int equalRate_MIN(int a, int b, int c)
+	{
+		return a*c/b;
+	}
+
 	public int equalRate(int a, int b, int c)
 	{
-		return (int) a / (b / c);
+		return a*c/b;
 	}
+
 
 	public int max(int a, int b)
 	{
