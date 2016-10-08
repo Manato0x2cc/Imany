@@ -17,7 +17,6 @@ import Imany.Imany;
 public class Setting extends JFrame implements WindowListener
 {
 	Logger lgr;
-	SwitchPanel sp;
 	String[] classes;
 	SettingPanel[] panels;
 	JButton backTop = new JButton("Top");
@@ -68,11 +67,15 @@ public class Setting extends JFrame implements WindowListener
 			InputStream inputStream = new FileInputStream(file);
         	prop.load(inputStream);
         	inputStream.close();
+        	initClasses();
+        	for (int j = 0; j < 3; j++) {
+    			panels[j].allSave(this);
+    		}
+    		prop.store(new FileOutputStream(file), "Do not change properties. It cannot read correctly.");
 		}catch(Exception e)
 		{
 			System.out.println(e.getMessage());
 		}
-		initClasses();
 	}
 
 	public void save(String key, String value){

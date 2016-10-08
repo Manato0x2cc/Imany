@@ -25,6 +25,7 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
 	private Framework[] fws = new Framework[6];
 	private boolean gamma_flag;
 	private int[] gamma_correction;
+	private int affine = 0;
 	public static void main(String[] arg)
 	{
 		if (getOS() == "MAC"){
@@ -179,6 +180,7 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
 	private void initHashMap()
 	{
 		hm.put("ガンマ補正", Algorithm.GAMMA);
+		hm.put("アフィン変換", Algorithm.AFFINE);
 	}
 
 	public void actionPerformed(ActionEvent e)
@@ -208,6 +210,12 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
     		if(type.getSelectedIndex() == -1) return;
     		if(ip.getImage() == null) return;
     		String selected = (String) type.getSelectedItem();
+    		if(new Integer(hm.get(selected)) == Algorithm.AFFINE){
+    			Algorithm.start(ip.getImage(), after, affine+=10);
+    			after.repaint();
+    			lgr.log("Algorithm was success!");
+    			return;
+    		}
     		after.setImage(Algorithm.start(ip.getImage(), new Integer(hm.get(selected))));
     		lgr.log("Algorithm was success!");
     	}
@@ -216,7 +224,8 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
     	{
     		if(after.getImage() == null) return;
     		JFileChooser fc = new JFileChooser();//ファイル開く奴〜wwwwww
-    		//fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    		FileFilter filter = new FileNameExtensionFilter("画像ファイル", ImageIO.getReaderFileSuffixes());
+			fc.setFileFilter(filter);
     		if(e.getActionCommand().equals("SaveAs")) fc.setSelectedFile(new File("Unknown.png"));
 			int selected = fc.showSaveDialog(this);
     		if (selected == JFileChooser.APPROVE_OPTION){//開いたとき
