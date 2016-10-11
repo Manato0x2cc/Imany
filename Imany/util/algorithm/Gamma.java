@@ -10,6 +10,8 @@ public class Gamma extends Algorithm
 		255
 			};
 
+	public static double gamma;
+
 	public static BufferedImage algorithm(BufferedImage img)
 	{
 		BufferedImage re = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -32,9 +34,10 @@ public class Gamma extends Algorithm
 		return rgba;
 	}
 
-	public static void changeGamma(double gamma)
+	public static void changeGamma(double gamma1)
 	{
-		if(gamma <= 0.0) return;// Division By Zero対策
+		if(gamma1 <= 0.0) return;// Division By Zero対策
+		gamma = gamma1;
 		double a;
 		double b;
 		for (int i = 0; i < 256; i++) {

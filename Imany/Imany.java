@@ -144,11 +144,11 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
 		panel2.setLayout(null);
 		add(panel2);
 
-		ip = new ImagePanel(lgr);
+		ip = new ImagePanel(lgr, true);
 		ip.setBounds(45,20,350,350);
 		panel.add(ip);
 
-		after = new ImagePanel(lgr);
+		after = new ImagePanel(lgr, false);
 		after.setBounds(45,20,350,350);
 		panel2.add(after);
 
@@ -181,6 +181,9 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
 	{
 		hm.put("ガンマ補正", Algorithm.GAMMA);
 		hm.put("アフィン変換", Algorithm.AFFINE);
+		hm.put("白黒", Algorithm.BLACK_AND_WHITE);
+		hm.put("ガウシアンフィルタ", Algorithm.GAUSSIAN);
+		hm.put("濃度ヒストグラム", Algorithm.HIST);
 	}
 
 	public void actionPerformed(ActionEvent e)
@@ -208,21 +211,21 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
     	if(e.getActionCommand().equals("algorithm"))
     	{
     		if(type.getSelectedIndex() == -1) return;
-    		if(ip.getImage() == null) return;
+    		if(ip.getImage(false) == null) return;
     		String selected = (String) type.getSelectedItem();
     		if(new Integer(hm.get(selected)) == Algorithm.AFFINE){
-    			Algorithm.start(ip.getImage(), after, affine+=10);
+    			Algorithm.start(ip.getImage(true), after, affine+=10);
     			after.repaint();
     			lgr.log("Algorithm was success!");
     			return;
     		}
-    		after.setImage(Algorithm.start(ip.getImage(), new Integer(hm.get(selected))));
+    		after.setImage(Algorithm.start(ip.getImage(true), new Integer(hm.get(selected))));
     		lgr.log("Algorithm was success!");
     	}
 
     	if(e.getActionCommand().equals("Save") || e.getActionCommand().equals("SaveAs"))
     	{
-    		if(after.getImage() == null) return;
+    		if(after.getImage(false) == null) return;
     		JFileChooser fc = new JFileChooser();//ファイル開く奴〜wwwwww
     		FileFilter filter = new FileNameExtensionFilter("画像ファイル", ImageIO.getReaderFileSuffixes());
 			fc.setFileFilter(filter);
@@ -287,11 +290,25 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
 	public void save(File file)
 	{
 		try{
-			ImageIO.write(after.getImage(), "png", file);
+			ImageIO.write(after.getImage(false), getSuffix(file), file);
 		}catch(Exception e)
 		{
 			lgr.warn(e.getMessage());
 		}
+	}
+
+	public static String getSuffix(File path) {
+    	if (path.isDirectory()) {
+        	return null;
+    	}
+ 
+    	String fileName = path.getName();
+ 
+    	int lastDotPosition = fileName.lastIndexOf(".");
+    	if (lastDotPosition != -1) {
+        	return fileName.substring(lastDotPosition + 1);
+    	}
+    	return null;
 	}
 
 	private static String getOS() {
