@@ -6,13 +6,19 @@ Because This Application is practice to analyze images.
 <ul>
 <li>Gamma Correction</li>
 <li>Black-and-White</li>
-<li>Grayscale</li>
+<li>Affine</li>
 <li>Histogram</li>
+<li>Gaussian</li>
 </ul>
 
 ##View
-<img src="https://raw.githubusercontent.com/Manato0x2cc/Imany/master/img/Affine.png" />
-<img src="https://raw.githubusercontent.com/Manato0x2cc/Imany/master/img/gamma_c.png" />
-<img src="https://raw.githubusercontent.com/Manato0x2cc/Imany/master/img/Histogram.png" />
-<img src="https://raw.githubusercontent.com/Manato0x2cc/Imany/master/img/B_A_W.png" />
-<img src="https://raw.githubusercontent.com/Manato0x2cc/Imany/master/img/Gaussian.png" />
+###Affine
+<img src="https://raw.githubusercontent.com/Manato0x2cc/Imany/master/img/Affine.png" width=650px height=320px/>
+###Gamma_correction
+<img src="https://raw.githubusercontent.com/Manato0x2cc/Imany/master/img/gamma_c.png" width=650px height=320px/>
+###Color_Histogram
+<img src="https://raw.githubusercontent.com/Manato0x2cc/Imany/master/img/Histogram.png" width=650px height=320px/>
+###BLACK_AND_WHITE
+<img src="https://raw.githubusercontent.com/Manato0x2cc/Imany/master/img/B_A_W.png" width=650px height=320px/>
+###Gaussian
+<img src="https://raw.githubusercontent.com/Manato0x2cc/Imany/master/img/Gaussian.png" width=650px height=320px/>
