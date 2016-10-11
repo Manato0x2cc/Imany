@@ -57,6 +57,7 @@ public class Histogram extends Algorithm
     			min_gray = Math.min(min_gray, histogram_gray[i]);
     			max_gray = Math.max(max_gray, histogram_gray[i]);
 			}
+			System.out.println("min: "+min_gray+" max: "+max_gray);
 			for(int i = 0; i < gMax; i++){
 	    		normHist_b[i] = (double) (histogram_b[i] - min_b) / (max_b - min_b);
 	    		normHist_g[i] = (double) (histogram_g[i] - min_g) / (max_g - min_g);
@@ -87,12 +88,47 @@ public class Histogram extends Algorithm
 			url = "file:"+System.getProperty("user.dir")+"/hist/hist.jpeg";
 			uri = new URI(url);
 			file = new File(uri);
-			ImageIO.write(re, "jpeg", file);
+			ImageIO.write(re, "jpg", file);
 			return re;
 		}catch(Exception e)
 		{
 
 		}
 		return null;
+	}
+
+	public static BufferedImage only_black(BufferedImage img)
+	{
+		int gMax = 256;//量子化ビット数
+		int[] histogram = new int[gMax];
+		BufferedImage re = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage s = Grayscale.algorithm(img);
+		int rgb;
+		for(int y = 0; y < img.getHeight(); y++){
+    		for(int x = 0; x < img.getWidth(); x++){
+       			histogram[s.getRGB(x,y) & 0xff]++;
+        	}
+        }
+        double[] normHist = new double[gMax];
+        int min = Integer.MAX_VALUE;
+		int max = Integer.MIN_VALUE;
+		for(int i = 0; i < gMax; i++){//縦軸の正規化
+    		min = Math.min(min, histogram[i]);
+    		max = Math.max(max, histogram[i]);
+		}
+		for(int i = 0; i < gMax; i++){
+	    	normHist[i] = (double) (histogram[i] - min) / (max - min);
+		}
+		Graphics2D g2 = re.createGraphics();
+		g2.setColor(Color.WHITE);
+		g2.fillRect(0,0,SIZE,SIZE);
+		int bin = 2;
+		for (int i = 0; i < gMax; i++) {
+			int x = i * bin;
+			int y = (int) (normHist[i] * SIZE + 0.5);
+			g2.setColor(Color.BLACK);
+			g2.fillRect(x, SIZE - 1 - y,bin,y);
+		}
+		return re;
 	}
 }

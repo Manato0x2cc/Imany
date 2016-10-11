@@ -3,12 +3,14 @@ package Imany.util.setting;
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import Imany.util.ImagePanel;
 
 public class AnalyzePanel extends SettingPanel implements ChangeListener
 {
 	private static final double DEFAULT = 1.5;//緑
 	private JSpinner spinner;
 	private double now;
+	private ImagePanel imagePanel;
 	public AnalyzePanel(Setting s)
 	{
 		if(s.get("gamma") == null) now = DEFAULT;
