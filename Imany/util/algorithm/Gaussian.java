@@ -20,9 +20,9 @@ public class Gaussian extends Algorithm
 				{2/16, 4/16, 2/16},
 				{1/16, 2/16, 1/16}
 			};
-	public static BufferedImage algorithm(BufferedImage img)
+	public static BufferedImage algorithm(BufferedImage img, boolean grayscale)
 	{
-		//img = Grayscale.algorithm(img);
+		if(grayscale) img = Grayscale.algorithm(img);
 		BufferedImage re = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
 		re.setData(img.getData());
 		for (int x = 1; x < img.getWidth() - 2; x++) {
@@ -41,29 +41,12 @@ public class Gaussian extends Algorithm
 				re.setRGB(x, y, toGaussian(img, x, y, GAUSSIAN_5, 2));
 			}
 		}
-
-		for (int x = 1; x < img.getWidth() - 2; x++) {
-			for (int y = 1; y < img.getHeight() - 2; y++) {
-				if(x == 1 || x == img.getWidth() -2)
-				{
-					re.setRGB(x, y, toGaussian(re, x, y, GAUSSIAN_3, 1));
-					continue;
-				}
-				if(y == 1 || y == img.getHeight())
-				{
-					re.setRGB(x, y, toGaussian(re, x, y, GAUSSIAN_3, 1));
-					continue;
-				}
-
-				re.setRGB(x, y, toGaussian(re, x, y, GAUSSIAN_5, 2));
-			}
-		}
 		return re;
 	}
 
 	private static int toGaussian(BufferedImage img, int x, int y, double[][] filter, int count)
 	{
-		double r = 0, g = 0, b = 0;
+		double r = 0.0, g = 0.0, b = 0.0;
 		int rgb = 0;
 		for (int i = -count; i <= count; i++) {
 			for (int j = -count; j <= count; j++) {

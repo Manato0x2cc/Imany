@@ -12,7 +12,8 @@ public class Algorithm
 	public static final int BLACK_AND_WHITE = 2;
 	public static final int GAUSSIAN = 3;
 	public static final int HIST = 4;
-	private static final String[] strs =  {"ガンマ補正","アフィン変換","白黒","ガウシアンフィルタ","濃度ヒストグラム","色反転"};
+	public static final int BINARIZE = 5;
+	private static final String[] strs =  {"ガンマ補正","アフィン変換","白黒","ガウシアンフィルタ","濃度ヒストグラム","2値化","色反転"};
 	public static BufferedImage start(BufferedImage img, int type)
 	{
 		if(type == GAMMA)
@@ -25,11 +26,15 @@ public class Algorithm
 			return re;
 		}else if(type == GAUSSIAN)
 		{
-			BufferedImage re = Gaussian.algorithm(img);
+			BufferedImage re = Gaussian.algorithm(img, false);
 			return re;
 		}else if(type == HIST)
 		{
 			BufferedImage re = Histogram.algorithm(img);
+			return re;
+		}else if(type == BINARIZE)
+		{
+			BufferedImage re = Binarize.algorithm(img, true);
 			return re;
 		}
 		return null;

@@ -184,6 +184,7 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
 		hm.put("白黒", Algorithm.BLACK_AND_WHITE);
 		hm.put("ガウシアンフィルタ", Algorithm.GAUSSIAN);
 		hm.put("濃度ヒストグラム", Algorithm.HIST);
+		hm.put("2値化", Algorithm.BINARIZE);
 	}
 
 	public void actionPerformed(ActionEvent e)
