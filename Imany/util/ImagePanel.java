@@ -18,20 +18,21 @@ import Imany.util.algorithm.Gamma;
 
 public class ImagePanel extends JPanel implements MouseMotionListener
 {
-	Image image;
-	BufferedImage returnImg;
-	Logger lgr;
+	Image image;//イメージ
+	BufferedImage returnImg;//返すBufferedImage
+	Logger lgr;//Logger
 	boolean isAffine = false;//アフィン変換された画像か
-	double rad;
-	TrimRectangle tr;
-	boolean trimming = false;
-	Point lastPoint = null;
+	double rad;//ラジアン
+	TrimRectangle tr;//分割する四角
+	boolean trimming = false;//分割してるか
+	Point lastPoint = null;//前回の点-->移動した距離
 	public static final int WIDTH = 439;
 	public static final int HEIGHT = 390;
-	public static final int MIN = 200;
+	public static final int MIN = 200;//最小画像サイズ
 	public ImagePanel(Logger l, boolean canTrim)
 	{
 		lgr = l;
+		//分割できないならマウスモーションイベントを呼ばない
 		if(canTrim)
 		{
 			addMouseMotionListener(this);
@@ -63,7 +64,7 @@ public class ImagePanel extends JPanel implements MouseMotionListener
 			ImageIcon icn = new ImageIcon(Gamma.algorithm(returnImg));
 			image = icn.getImage();
 			Gamma.changeGamma(Gamma.gamma);*/
-			g.setColor(new Color(0,0,0,180));
+			g.setColor(new Color(0,0,0,180));//周りを薄暗く
 			//g.fillRect(0,0,getWidth(), getHeight());
 			g.fillRect(0,0,getWidth(),tr.getY());
 			g.fillRect(0,tr.getY()+tr.getHeight(),getWidth(),getHeight()-(tr.getY()+tr.getHeight()));

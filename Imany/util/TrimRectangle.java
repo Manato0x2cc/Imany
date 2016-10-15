@@ -4,10 +4,11 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.Point;
 
+//分割する
 public class TrimRectangle
 {
-	private Point firstPoint;
-	private Point secondPoint;
+	private Point firstPoint;//左上
+	private Point secondPoint;//右上
 	public static final int NONE = 0;
 	public static final int LEFT_TOP = 1;
 	public static final int LEFT_BOTTOM = 2;

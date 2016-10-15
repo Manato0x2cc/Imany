@@ -16,20 +16,26 @@ import javax.swing.filechooser.FileFilter;
 import java.util.HashMap;
 
 public class Imany extends JFrame implements ActionListener, MouseListener{
-	private ImagePanel ip;
-	private ImagePanel after;
-	private JComboBox<String> type;
+	private ImagePanel ip;//左側のイメージパネル
+	private ImagePanel after;//右側のイメージパネル
+	private JComboBox<String> type;//画像処理の種類一覧
 	private HashMap<String,Integer> hm = new HashMap<String, Integer>();
+	//文字列をAlgorithm.javaで定義されてる定数に変換
 	public Logger lgr;
+	//Loggerクラス
 	private Setting s;
+	//設定画面
 	private Framework[] fws = new Framework[6];
-	private boolean gamma_flag;
-	private int[] gamma_correction;
+	//周りの枠
 	private int affine = 0;
+	//角度(一回ごとに+10)
+
+	//mainメソッド
 	public static void main(String[] arg)
 	{
 		if (getOS() == "MAC"){
 			System.setProperty("apple.laf.useScreenMenuBar", "true");
+			//上のツールバーにメニューを表示
 		}
 		Imany im = new Imany();
 		im.setLocationRelativeTo(null);//中央
@@ -39,12 +45,14 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
 
 	public Imany()
 	{
-		initHashMap();
-		setTitle("Imany");
-		setResizable(false);
-		setSize(1000,650);
+		initHashMap();//ハッシュマップを初期化
+		setTitle("Imany");//タイトルを設定
+		setResizable(false);//リサイズ不可
+		setSize(1000,650);//サイズ
 		setLayout(null);
-		addMouseListener(this);
+		addMouseListener(this);//マウスリスナーを追加
+
+		//メニュー
 		JMenuBar menubar = new JMenuBar();
 		JMenu menu1 = new JMenu("File");
 		JMenuItem mnu1_1 = new JMenuItem("Open");
@@ -87,9 +95,11 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
 		menubar.add(menu4);
 		setJMenuBar(menubar);
 
+		//ロゴ
 		JLabel logo = new JLabel(new ImageIcon(getURL("img/logo.png")));
 		logo.setBounds(0,0,170,60);
 
+		//周りの枠
 		Framework fw1 = new Framework();//左
 		Framework fw2 = new Framework();//上
 		fw2.setLayout(null);
@@ -121,6 +131,7 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
 		add(fw5);
 		add(fw6);
 
+		//ログ
 		JScrollPane spane= new JScrollPane();
 		spane.setBounds(50,470,900,130);
 
@@ -132,6 +143,7 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
 
 		new File(System.getProperty("user.dir")+"/resources").mkdir();//Make Folder
 
+		//イメージパネルの後ろ(グレーだと見栄えが....)
 		JPanel panel = new JPanel();
 		panel.setBounds(50,60,439,390);
 		panel.setBackground(new Color(255,255,255));
@@ -144,10 +156,12 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
 		panel2.setLayout(null);
 		add(panel2);
 
+		//イメージパネル
 		ip = new ImagePanel(lgr, true);
 		ip.setBounds(45,20,350,350);
 		panel.add(ip);
 
+		//変換後の画像を表示
 		after = new ImagePanel(lgr, false);
 		after.setBounds(45,20,350,350);
 		panel2.add(after);
@@ -214,12 +228,14 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
     		if(type.getSelectedIndex() == -1) return;
     		if(ip.getImage(false) == null) return;
     		String selected = (String) type.getSelectedItem();
-    		if(new Integer(hm.get(selected)) == Algorithm.AFFINE){
+
+    		if(new Integer(hm.get(selected)) == Algorithm.AFFINE){//アフィンだと処理が少し違う
     			Algorithm.start(ip.getImage(true), after, affine+=10);
     			after.repaint();
     			lgr.log("Algorithm was success!");
     			return;
     		}
+
     		after.setImage(Algorithm.start(ip.getImage(true), new Integer(hm.get(selected))));
     		lgr.log("Algorithm was success!");
     	}
@@ -247,19 +263,19 @@ public class Imany extends JFrame implements ActionListener, MouseListener{
       			}
 			}
     	}
-
+    	//新しい画面
     	if(e.getActionCommand().equals("NewWindow"))
     	{
     		Imany i = new Imany();
     		i.setVisible(true);
     	}
-
+    	//色
     	if(e.getActionCommand().equals("color"))
     	{
     		s.setPage(Setting.TYPE_COLOR);
     		s.setVisible(true);
     	}
-
+    	//ガンマ値の設定など
     	if(e.getActionCommand().equals("analyze"))
     	{
     		s.setPage(Setting.TYPE_ANALYZE);

@@ -7,6 +7,10 @@ import java.awt.Color;
 
 public class Affine extends Algorithm
 {
+	/*
+	x' = x*cosθ - y+sinθ + 0
+	y' = x*sinθ + y*cosθ + 0
+	*/
 	public static final int CENTERX = ImagePanel.WIDTH/2;
 	public static final int CENTERY = ImagePanel.HEIGHT/2;
 	//画像 回転するパネル 角度

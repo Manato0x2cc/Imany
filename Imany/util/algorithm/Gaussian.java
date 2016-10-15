@@ -6,6 +6,7 @@ public class Gaussian extends Algorithm
 {
 	private static final double NEPIER = 2.7182;
 	private static final double SIGMA = 2.7182;
+	//5*5のカーネル
 	private static final double[][] GAUSSIAN_5 = 
 			{
 				{1/256.0,  4/256.0,  6/256.0,  4/256.0, 1/256.0},
@@ -14,6 +15,7 @@ public class Gaussian extends Algorithm
 				{4/256.0, 16/256.0, 24/256.0, 16/256.0, 4/256.0},
 				{1/256.0,  4/256.0,  6/256.0,  4/256.0, 1/256.0}
 			};
+	//3*3のカーネル
 	private static final double[][] GAUSSIAN_3 = 
 			{
 				{1/16, 2/16, 1/16},

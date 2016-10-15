@@ -7,7 +7,7 @@ import java.io.File;
 import java.net.URI;
 public class Histogram extends Algorithm
 {
-	private static final int SIZE = 512;
+	private static final int SIZE = 524;
 	public static BufferedImage algorithm(BufferedImage img)
 	{
 		try{
@@ -17,10 +17,10 @@ public class Histogram extends Algorithm
 			file.mkdir();
 			BufferedImage re = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
 			int gMax = 256;//量子化ビット数
-			int[] histogram_b = new int[gMax];
-			int[] histogram_g = new int[gMax];
-			int[] histogram_r = new int[gMax];
-			int[] histogram_gray = new int[gMax];
+			int[] histogram_b = new int[gMax];//青
+			int[] histogram_g = new int[gMax];//緑
+			int[] histogram_r = new int[gMax];//赤
+			int[] histogram_gray = new int[gMax];//グレースケール化
 			BufferedImage s = Grayscale.algorithm(img);
 			int rgb;
 			for(int y = 0; y < img.getHeight(); y++){
@@ -84,10 +84,10 @@ public class Histogram extends Algorithm
 				g2.setColor(Color.BLACK);
 				g2.fillRect(x+SIZE/2,SIZE - 1 - y_gray,bin,y_gray);
 			}
-			url = "file:"+System.getProperty("user.dir")+"/hist/hist.jpeg";
+			/*url = "file:"+System.getProperty("user.dir")+"/hist/hist.png";
 			uri = new URI(url);
 			file = new File(uri);
-			ImageIO.write(re, "jpg", file);
+			ImageIO.write(re, "png", file);*/
 			return re;
 		}catch(Exception e)
 		{
